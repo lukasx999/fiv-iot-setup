@@ -15,3 +15,12 @@ Ein IoT-Setup mit MQTT als middleware.
 - Web Oberfläche für die Bedienung über ein mobiles Gerät (Handy)
   - Variante 1: Auf der Serverseite MQTT mit dem Broker sprechen, mit dem Client über Websockets
   - Variante 2: Vom Client direkt via WebSockets mit dem Broker kommunizieren.
+
+
+### Usage
+
+panes:
+- `mosquitto`
+- `mosquitto_sub -t "/fiv/lb/<id>/state"`
+- `mosquitto_pub -t "/fiv/lb/<id>/action" -m <1 | 0>`
+- `python lightbulb.py <id>`
