@@ -6,6 +6,7 @@ from paho.mqtt.client import MQTTMessage, Client
 
 
 
+# Wenn das Internet das Web ist, dann bin ich die Spinne!
 app = FastAPI()
 
 
