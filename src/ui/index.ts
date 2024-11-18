@@ -14,10 +14,9 @@ window.onload = () => {
 
         const p: Promise<Response> = fetch("http://127.0.0.1:8000/light/1?state=on")
         p.then((res) => {
-
             const data = res.json();
             console.log(data);
-        })
+        });
 
     };
 
