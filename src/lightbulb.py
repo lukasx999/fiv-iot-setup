@@ -1,4 +1,5 @@
 from paho.mqtt.client import MQTTMessage, Client
+import paho
 import sys
 
 
@@ -17,7 +18,9 @@ class State:
 def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     message: str = msg.payload.decode("UTF-8")
     state.enabled = True if message == '1' else False
+    print(state.enabled)
     mosq.publish(f'/fiv/lb/{state.id}/state', state.enabled, 0)
+
 
 
 
@@ -30,11 +33,10 @@ def main() -> int:
 
     state = State(int(sys.argv[1]), False)
 
+    
     client = Client(userdata=state)
     client.on_message = on_message
-
     client.connect(BROKER, PORT, 60)
-
     client.subscribe(f"/fiv/lb/{state.id}/action", 0)
 
     try:
