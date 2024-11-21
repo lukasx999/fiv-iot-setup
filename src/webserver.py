@@ -2,6 +2,7 @@ from typing import Union
 import sys
 import threading
 from threading import Thread
+import json
 
 from fastapi import FastAPI, WebSocket
 from fastapi.staticfiles import StaticFiles
@@ -16,46 +17,62 @@ BROKER: str = "127.0.0.1"
 PORT:   int = 1883
 
 
-# Wenn das Internet das Web ist, dann bin ich die Spinne!
-app    = FastAPI()
-client = Client()
-client.connect(BROKER, PORT, 60)
+app = FastAPI()
 
 
-def on_message(mosq: Client, msg: MQTTMessage) -> None:
+
+# TODO: return current amount of lightbulbs
+# @app.get("/get_lights")
+# def light(light_id: int, state: Union[str, None] = None):
+#     ...
+
+
+# # http://127.0.0.1:8000/light/1?state=on
+# @app.post("/light/{light_id}")
+# def light(light_id: int, state: Union[str, None] = None):
+#     print(f"POST: {light_id=}, {state=}")
+#     client.publish(f'/fiv/lb/{light_id}/action', 1 if state == "on" else 0, 0)
+
+
+class State:
+    def __init__(self, websocket: WebSocket) -> None:
+        self.websocket = websocket
+
+
+def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     message: str = msg.payload.decode("UTF-8")
-    print("foo")
-    if message == "1":
-        print("on")
-    else:
-        print("off")
+    # state.websocket.send_text(f"Message text was: {msg}")
+    response: dict = json.loads(message)
+    print(f"state: {response}!")
 
 
 
-def check_led_state() -> None:
-    client.subscribe("/fiv/lb/1/state", 0)
-    client.on_message = on_message
-    while client.loop() == 0:
-        pass
-
-
-
-
-# http://127.0.0.1:8000/light/1?state=on
-@app.post("/light/{light_id}")
-def light(light_id: int, state: Union[str, None] = None):
-    print(f"POST: {light_id=}, {state=}")
-    client.publish(f'/fiv/lb/{light_id}/action', 1 if state == "on" else 0, 0)
-
-
-
-@app.websocket("/ws")
+@app.websocket("/lightctl")
 async def websocket_endpoint(websocket: WebSocket):
+
+    state = State(websocket)
+
+    client = Client(userdata=state)
+    client.connect(BROKER, PORT, 60)
+    client.on_message = on_message
+    client.subscribe("/fiv/lb/+/state", 0)
+
+    # TODO: send lightbulb state and amount at start time
+
     await websocket.accept()
-    while True:
-        data = await websocket.receive_text()
-        print(data)
-        await websocket.send_text(f"Message text was: {data}")
+    while client.loop() == 0:
+        data: str  = await websocket.receive_text()
+        data: dict = json.loads(data)
+
+        id:    int  = data["id"]
+        state: bool = data["action"]
+
+        # client.user_data_set()
+
+        print(f"{id=}, {state=}")
+        client.publish(f'/fiv/lb/{id}/action', 1 if state else 0, 0)
+
+        # await websocket.send_text(f"Message text was: {data}")
 
 
 

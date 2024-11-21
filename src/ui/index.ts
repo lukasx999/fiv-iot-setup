@@ -1,14 +1,34 @@
-// import { io } from "socket.io-client";
-// const socket = io("http://127.0.0.1:8000/ws");
 
-const ws = new WebSocket("http://127.0.0.1:8000/ws");
+const ws = new WebSocket("http://127.0.0.1:8000/lightctl");
 
 (() => {
-    console.log("foo");
+
 })()
 
 
 window.onload = () => {
+
+    /*
+    const img_dababy: HTMLElement|null =
+    document.getElementById("hitartistandrapper");
+
+    if (img_dababy === null) {
+        return;
+    }
+
+    let deg: number = 0;
+
+    setInterval(() => {
+        img_dababy.style.transform = `rotate(${deg}deg)`;
+        img_dababy.style.left = ``;
+        deg += 1;
+        if (deg >= 360) {
+            deg = 0;
+        }
+    }, 10);
+    */
+
+
 
     const btn_light_on: HTMLElement|null = document.getElementById("light_on");
 
@@ -21,17 +41,14 @@ window.onload = () => {
         console.log("let there be light!!!");
 
         const data: string =
-        JSON.stringify({ "lightbulb": 1, "action": true });
+        JSON.stringify({ "id": 1, "action": true });
         console.log(data);
 
         ws.send(data);
 
-
         // const p: Promise<Response> =
         // fetch("http://127.0.0.1:8000/light/1?state=on", { method: 'POST' });
         // p.then((res) => {});
-
-
 
     };
 

@@ -1,6 +1,7 @@
 from paho.mqtt.client import MQTTMessage, Client
 import paho
 import sys
+import json
 
 
 BROKER: str = "127.0.0.1"
@@ -14,12 +15,14 @@ class State:
 
 
 
-# NOTE: what should happen if a incorrect message was sent to the light bulb client?!
+# TODO: jsòn/protobuf
 def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     message: str = msg.payload.decode("UTF-8")
     state.enabled = True if message == '1' else False
     print(state.enabled)
-    mosq.publish(f'/fiv/lb/{state.id}/state', state.enabled, 0)
+
+    response = { "state": state.enabled }
+    mosq.publish(f'/fiv/lb/{state.id}/state', json.dumps(response), 0)
 
 
 
