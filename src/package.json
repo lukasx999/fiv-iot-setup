@@ -1,5 +1,7 @@
 {
   "name": "src",
+  "type": "module",
+  "private": true,
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,5 +12,8 @@
   "description": "",
   "dependencies": {
     "typescript": "^5.6.3"
+  },
+  "devDependencies": {
+    "vite": "^5.4.11"
   }
 }

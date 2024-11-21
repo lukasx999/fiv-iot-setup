@@ -33,7 +33,6 @@ def main() -> int:
 
     state = State(int(sys.argv[1]), False)
 
-    
     client = Client(userdata=state)
     client.on_message = on_message
     client.connect(BROKER, PORT, 60)

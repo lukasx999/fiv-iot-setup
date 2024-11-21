@@ -1,3 +1,11 @@
+// import { io } from "socket.io-client";
+// const socket = io("http://127.0.0.1:8000/ws");
+
+const ws = new WebSocket("http://127.0.0.1:8000/ws");
+
+(() => {
+    console.log("foo");
+})()
 
 
 window.onload = () => {
@@ -10,11 +18,20 @@ window.onload = () => {
 
     btn_light_on.onclick = () => {
 
-        console.log("let there be light!");
+        console.log("let there be light!!!");
 
-        const p: Promise<Response> =
-        fetch("http://127.0.0.1:8000/light/1?state=on", { method: 'POST' });
-        p.then((res) => {});
+        const data: string =
+        JSON.stringify({ "lightbulb": 1, "action": true });
+        console.log(data);
+
+        ws.send(data);
+
+
+        // const p: Promise<Response> =
+        // fetch("http://127.0.0.1:8000/light/1?state=on", { method: 'POST' });
+        // p.then((res) => {});
+
+
 
     };
 
