@@ -36,6 +36,12 @@ window.onload = () => {
         return;
     }
 
+
+    ws.onmessage = message => {
+        console.log(message);
+    };
+
+
     btn_light_on.onclick = () => {
 
         console.log("let there be light!!!");

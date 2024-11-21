@@ -21,7 +21,7 @@ def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     state.enabled = True if message == '1' else False
     print(state.enabled)
 
-    response = { "state": state.enabled }
+    response = { "id": state.id, "state": state.enabled }
     mosq.publish(f'/fiv/lb/{state.id}/state', json.dumps(response), 0)
 
 

@@ -39,11 +39,11 @@ class State:
         self.websocket = websocket
 
 
-def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
+async def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     message: str = msg.payload.decode("UTF-8")
-    # state.websocket.send_text(f"Message text was: {msg}")
-    response: dict = json.loads(message)
-    print(f"state: {response}!")
+    await state.websocket.send_text(message)
+    # response: dict = json.loads(message)
+    print(f"state: {message}!")
 
 
 
