@@ -1,20 +1,20 @@
 # fiv-iot-setup
 
-## Projekt
+## Project
 
-### Ziel
+### Goal
 
-Ein IoT-Setup mit MQTT als middleware.
+An IoT-Setup with MQTT as middleware.
  
-**Komponenten**:
-- MQTT-Broker (z.b. mosquitto in VM)
-- n "Endgeräte" (zb simulierte Glühbirnen die man ein und ausschalten kann)
-- mind. ein "Steuergerät" ((T)GUI die mit dem Benutzer kommuniziert)
-- Erlaubt absetzen von Befehlen
-- Zeigt aktuellen Status an
-- Web Oberfläche für die Bedienung über ein mobiles Gerät (Handy)
-  - Variante 1: Auf der Serverseite MQTT mit dem Broker sprechen, mit dem Client über Websockets
-  - Variante 2: Vom Client direkt via WebSockets mit dem Broker kommunizieren.
+**Components**:
+- MQTT-Broker (e.g. mosquitto in VM)
+- n "receiver" (e.g. simulated lightbulb which can be toggled)
+- A minimum of one controlling device ((T)GUI which communicates with the user)
+- Allows depositing of commands
+- Displays current status
+- Web interface for handling using a mobile device.
+  - Variant 1: Server sided MQTT communication with broker, with client using websockets.
+  - Variant 2: Using websockets to directly commnunicate from client to broker.
 
 
 ### Usage
