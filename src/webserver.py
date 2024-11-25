@@ -46,6 +46,7 @@ def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
 
     loop: AbstractEventLoop = asyncio.get_event_loop()
     loop.run_until_complete(state.websocket.send_text(message))
+    # BUG: for some reason the websocket connection is already closed at this point
 
     # await state.websocket.send_text(message)
     # response: dict = json.loads(message)
