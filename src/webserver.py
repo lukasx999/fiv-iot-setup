@@ -53,14 +53,14 @@ async def websocket_endpoint(websocket: WebSocket):
     state = State(websocket)
 
     client = Client(userdata=state)
-    client.connect(BROKER, PORT, 60)
     client.on_message = on_message
+    client.connect(BROKER, PORT, 60)
     client.subscribe("/fiv/lb/+/state", 0)
 
-    # TODO: send lightbulb state and amount at start time
+    # TODO: send lightbulb state and amount at start of connection
 
     await websocket.accept()
-    while client.loop() == 0:
+    while client.loop() == 0:  # Keep connection alive as long as the mqtt client is active
         data: str  = await websocket.receive_text()
         data: dict = json.loads(data)
 
