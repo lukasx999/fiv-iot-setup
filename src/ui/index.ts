@@ -18,8 +18,6 @@ window.onload = () => {
         return;
     }
 
-
-
     btn_light_on.onclick = () => {
         console.log("let there be light!!!");
 

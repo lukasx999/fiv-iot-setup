@@ -3,6 +3,8 @@ import sys
 import threading
 from threading import Thread
 import json
+import asyncio
+from asyncio import AbstractEventLoop
 
 from fastapi import FastAPI, WebSocket
 from fastapi.staticfiles import StaticFiles
@@ -39,11 +41,15 @@ class State:
         self.websocket = websocket
 
 
-async def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
+def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     message: str = msg.payload.decode("UTF-8")
-    await state.websocket.send_text(message)
+
+    loop: AbstractEventLoop = asyncio.get_event_loop()
+    loop.run_until_complete(state.websocket.send_text(message))
+
+    # await state.websocket.send_text(message)
     # response: dict = json.loads(message)
-    print(f"state: {message}!")
+    print(f"Receiving state from device: `{message}`")
 
 
 
@@ -69,7 +75,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
         # client.user_data_set()
 
-        print(f"{id=}, {state=}")
+        print(f"Receiving from WS: `{id=}, {state=}`")
         client.publish(f'/fiv/lb/{id}/action', 1 if state else 0, 0)
 
         # await websocket.send_text(f"Message text was: {data}")
