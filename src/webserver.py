@@ -64,6 +64,7 @@ async def websocket_endpoint(websocket: WebSocket):
     client.subscribe("/fiv/lb/+/state", 0)
 
     # TODO: send lightbulb state and amount at start of connection
+    # TODO: mqtt topic: server asking lightbulb client to send initial state to /fiv/lb/{}/state
 
     await websocket.accept()
     while client.loop() == 0:  # Keep connection alive as long as the mqtt client is active
