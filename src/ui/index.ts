@@ -6,7 +6,9 @@ const ws = new WebSocket("http://127.0.0.1:8000/lightctl");
 
 ws.onmessage = message => {
     // TODO: receive ws state message (update ui)
-    console.log(message);
+    const data = message.data;
+    console.log(data);
+
 };
 
 

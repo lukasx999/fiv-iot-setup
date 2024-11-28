@@ -38,19 +38,25 @@ app = FastAPI()
 
 class State:
     def __init__(self, websocket: WebSocket) -> None:
-        self.websocket = websocket
+        self.websocket   = websocket
 
 
 def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     message: str = msg.payload.decode("UTF-8")
 
-    loop: AbstractEventLoop = asyncio.get_event_loop()
-    loop.run_until_complete(state.websocket.send_text(message))
     # BUG: for some reason the websocket connection is already closed at this point
 
-    # await state.websocket.send_text(message)
-    # response: dict = json.loads(message)
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    # loop: AbstractEventLoop = asyncio.get_event_loop()
+    loop.run_until_complete(state.websocket.send_text(message))
+
     print(f"Receiving state from device: `{message}`")
+
+
+def mqtt_thread(client: Client) -> None:
+    while client.loop() == 0:
+        pass
 
 
 
@@ -64,11 +70,17 @@ async def websocket_endpoint(websocket: WebSocket):
     client.connect(BROKER, PORT, 60)
     client.subscribe("/fiv/lb/+/state", 0)
 
+
     # TODO: send lightbulb state and amount at start of connection
     # TODO: mqtt topic: server asking lightbulb client to send initial state to /fiv/lb/{}/state
+    # TODO: let websocket loop run in second thread, mqtt client should run in main thread for asyncio
+
+    thread = threading.Thread(target=mqtt_thread, args=(client,))
+    thread.start()
+
 
     await websocket.accept()
-    while client.loop() == 0:  # Keep connection alive as long as the mqtt client is active
+    while True:  # Keep connection alive as long as the mqtt client is active
         data: str  = await websocket.receive_text()
         data: dict = json.loads(data)
 
