@@ -1,35 +1,42 @@
 const ws = new WebSocket("http://127.0.0.1:8000/lightctl");
 
-(() => {
-})()
-
+const LIGHTBULB_COUNT: number = 3;
 
 ws.onmessage = message => {
-    // TODO: receive ws state message (update ui)
-    const data = message.data;
-    console.log(data);
+    const jason: string = message.data;
+    const data = JSON.parse(jason);
+
+    const id = data.id;
+    const state: boolean = data.state;
+
+    const checkbox = <HTMLInputElement> document.getElementById(`checkbox_${id}`);
+    checkbox.checked = state;
 
 };
 
-
 window.onload = () => {
 
-    const btn_light_on: HTMLElement|null = document.getElementById("light_on");
+    for (let id of Array(LIGHTBULB_COUNT).keys()) {
+        id++;
 
-    if (btn_light_on === null) {
-        return;
+        const toggle_button: HTMLInputElement = document.createElement("input");
+        toggle_button.setAttribute("type", "checkbox");
+        toggle_button.setAttribute("id", `checkbox_${id}`);
+
+        const element: HTMLElement|null = document.getElementById("div");
+        if (element === null) { return; }
+        element.appendChild(toggle_button);
+
+        toggle_button.onclick = () => {
+            console.log("let there be light!!!");
+
+            const data: string = JSON.stringify(
+                { "id": id, "action": toggle_button.checked }
+            );
+            ws.send(data);
+        };
+
     }
 
-    btn_light_on.onclick = () => {
-        console.log("let there be light!!!");
-
-        const data: string =
-        JSON.stringify({ "id": 1, "action": true });
-
-        ws.send(data);
-        // const p: Promise<Response> =
-        // fetch("http://127.0.0.1:8000/light/1?state=on", { method: 'POST' });
-        // p.then((res) => {});
-    };
 
 }
