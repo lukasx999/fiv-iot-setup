@@ -22,13 +22,6 @@ PORT:   int = 1883
 app = FastAPI()
 
 
-
-# TODO: return current amount of lightbulbs
-# @app.get("/get_lights")
-# def light(light_id: int, state: Union[str, None] = None):
-#     ...
-
-
 # # http://127.0.0.1:8000/light/1?state=on
 # @app.post("/light/{light_id}")
 # def light(light_id: int, state: Union[str, None] = None):
@@ -80,7 +73,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
     await websocket.accept()
-    while True:  # Keep connection alive as long as the mqtt client is active
+    while True:
         data: str  = await websocket.receive_text()
         data: dict = json.loads(data)
 
@@ -95,10 +88,4 @@ async def websocket_endpoint(websocket: WebSocket):
         # await websocket.send_text(f"Message text was: {data}")
 
 
-
 app.mount("/", StaticFiles(directory="ui/dist", html=True), name="ui")
-
-
-# @app.get("/")
-# async def root():
-#     return FileResponse('ui/index.html')
