@@ -22,12 +22,6 @@ PORT:   int = 1883
 app = FastAPI()
 
 
-# # http://127.0.0.1:8000/light/1?state=on
-# @app.post("/light/{light_id}")
-# def light(light_id: int, state: Union[str, None] = None):
-#     print(f"POST: {light_id=}, {state=}")
-#     client.publish(f'/fiv/lb/{light_id}/action', 1 if state == "on" else 0, 0)
-
 
 class State:
     def __init__(self, websocket: WebSocket) -> None:
@@ -57,20 +51,16 @@ def mqtt_thread(client: Client) -> None:
 async def websocket_endpoint(websocket: WebSocket):
 
     state = State(websocket)
-
     client = Client(userdata=state)
     client.on_message = on_message
     client.connect(BROKER, PORT, 60)
     client.subscribe("/fiv/lb/+/state", 0)
 
-
     # TODO: send lightbulb state and amount at start of connection
     # TODO: mqtt topic: server asking lightbulb client to send initial state to /fiv/lb/{}/state
-    # TODO: let websocket loop run in second thread, mqtt client should run in main thread for asyncio
 
     thread = threading.Thread(target=mqtt_thread, args=(client,))
     thread.start()
-
 
     await websocket.accept()
     while True:

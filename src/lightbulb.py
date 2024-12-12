@@ -19,7 +19,11 @@ class State:
 def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     message: str = msg.payload.decode("UTF-8")
     state.enabled = True if message == '1' else False
-    print(state.enabled)
+
+    if state.enabled:
+        print("LED is on")
+    else:
+        print("LED is off")
 
     response = { "id": state.id, "state": state.enabled }
     mosq.publish(f'/fiv/lb/{state.id}/state', json.dumps(response), 0)

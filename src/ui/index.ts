@@ -1,4 +1,7 @@
-const ws = new WebSocket("http://127.0.0.1:8000/lightctl");
+// const ADDRESS = "http://127.0.0.1:8000/lightctl";
+const ADDRESS = "http://172.31.179.138:8000/lightctl";
+
+const ws = new WebSocket(ADDRESS);
 
 const LIGHTBULB_COUNT: number = 3;
 
