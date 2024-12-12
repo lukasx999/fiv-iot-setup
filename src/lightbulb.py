@@ -18,7 +18,13 @@ class State:
 # TODO: jsòn/protobuf
 def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     message: str = msg.payload.decode("UTF-8")
-    state.enabled = True if message == '1' else False
+
+    # "get" just responds with the current state, without modifying it
+    match message:
+        case "on":
+            state.enabled = True
+        case "off":
+            state.enabled = False
 
     if state.enabled:
         print("LED is on")

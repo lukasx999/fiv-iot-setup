@@ -15,6 +15,7 @@ from paho.mqtt.client import MQTTMessage, Client
 import paho
 
 
+DEVICE_COUNT: int = 1
 BROKER: str = "127.0.0.1"
 PORT:   int = 1883
 
@@ -59,10 +60,18 @@ async def websocket_endpoint(websocket: WebSocket):
     # TODO: send lightbulb state and amount at start of connection
     # TODO: mqtt topic: server asking lightbulb client to send initial state to /fiv/lb/{}/state
 
+
+    await websocket.accept()
+
     thread = threading.Thread(target=mqtt_thread, args=(client,))
     thread.start()
 
-    await websocket.accept()
+    for id in range(1, DEVICE_COUNT+1):
+        client.publish(f'/fiv/lb/{id}/action', "get", 0)
+
+    devicelist = { "count": DEVICE_COUNT }
+    await websocket.send_text(f"count: {DEVICE_COUNT}")
+
     while True:
         data: str  = await websocket.receive_text()
         data: dict = json.loads(data)
@@ -73,7 +82,7 @@ async def websocket_endpoint(websocket: WebSocket):
         # client.user_data_set()
 
         print(f"Receiving from WS: `{id=}, {state=}`")
-        client.publish(f'/fiv/lb/{id}/action', 1 if state else 0, 0)
+        client.publish(f'/fiv/lb/{id}/action', "on" if state else "off", 0)
 
         # await websocket.send_text(f"Message text was: {data}")
 
