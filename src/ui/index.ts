@@ -9,6 +9,10 @@ ws.onmessage = message => {
     const jason: string = message.data;
     const data = JSON.parse(jason);
 
+    if (data.count) {
+        console.log(`count is: ${data.count}`);
+    }
+
     const id = data.id;
     const state: boolean = data.state;
 

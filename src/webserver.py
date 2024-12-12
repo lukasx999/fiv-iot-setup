@@ -70,7 +70,7 @@ async def websocket_endpoint(websocket: WebSocket):
         client.publish(f'/fiv/lb/{id}/action', "get", 0)
 
     devicelist = { "count": DEVICE_COUNT }
-    await websocket.send_text(f"count: {DEVICE_COUNT}")
+    await websocket.send_text(json.dumps(devicelist))
 
     while True:
         data: str  = await websocket.receive_text()
