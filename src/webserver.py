@@ -15,7 +15,7 @@ from paho.mqtt.client import MQTTMessage, Client
 import paho
 
 
-DEVICE_COUNT: int = 1
+DEVICE_COUNT: int = 3
 BROKER: str = "127.0.0.1"
 PORT:   int = 1883
 
@@ -31,8 +31,6 @@ class State:
 
 def on_message(mosq: Client, state: State, msg: MQTTMessage) -> None:
     message: str = msg.payload.decode("UTF-8")
-
-    # BUG: for some reason the websocket connection is already closed at this point
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
@@ -57,10 +55,6 @@ async def websocket_endpoint(websocket: WebSocket):
     client.connect(BROKER, PORT, 60)
     client.subscribe("/fiv/lb/+/state", 0)
 
-    # TODO: send lightbulb state and amount at start of connection
-    # TODO: mqtt topic: server asking lightbulb client to send initial state to /fiv/lb/{}/state
-
-
     await websocket.accept()
 
     thread = threading.Thread(target=mqtt_thread, args=(client,))
@@ -79,12 +73,8 @@ async def websocket_endpoint(websocket: WebSocket):
         id:    int  = data["id"]
         state: bool = data["action"]
 
-        # client.user_data_set()
-
         print(f"Receiving from WS: `{id=}, {state=}`")
         client.publish(f'/fiv/lb/{id}/action', "on" if state else "off", 0)
-
-        # await websocket.send_text(f"Message text was: {data}")
 
 
 app.mount("/", StaticFiles(directory="ui/dist", html=True), name="ui")

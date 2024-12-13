@@ -1,29 +1,10 @@
-// const ADDRESS = "http://127.0.0.1:8000/lightctl";
-const ADDRESS = "http://172.31.179.138:8000/lightctl";
-
+const ADDRESS = "http://172.31.180.71:8000/lightctl";
 const ws = new WebSocket(ADDRESS);
 
-const LIGHTBULB_COUNT: number = 3;
 
-ws.onmessage = message => {
-    const jason: string = message.data;
-    const data = JSON.parse(jason);
+const render_checkboxes = (lightbulb_count: number) => {
 
-    if (data.count) {
-        console.log(`count is: ${data.count}`);
-    }
-
-    const id = data.id;
-    const state: boolean = data.state;
-
-    const checkbox = <HTMLInputElement> document.getElementById(`checkbox_${id}`);
-    checkbox.checked = state;
-
-};
-
-window.onload = () => {
-
-    for (let id of Array(LIGHTBULB_COUNT).keys()) {
+    for (let id of Array(lightbulb_count).keys()) {
         id++;
 
         const toggle_button: HTMLInputElement = document.createElement("input");
@@ -44,6 +25,34 @@ window.onload = () => {
         };
 
     }
+}
+
+
+
+
+
+ws.onmessage = message => {
+    const jason: string = message.data;
+    const data = JSON.parse(jason);
+
+    console.log(data);
+
+    // render the initial checkboxes
+    if ("count" in data) {
+        console.log(`count is: ${data.count}`);
+        render_checkboxes(data.count);
+
+    // change checkbox state
+    } else {
+        const id = data.id;
+        const state: boolean = data.state;
+        const checkbox = <HTMLInputElement> document.getElementById(`checkbox_${id}`);
+        checkbox.checked = state;
+    }
+
+};
+
+window.onload = () => {
 
 
 }
