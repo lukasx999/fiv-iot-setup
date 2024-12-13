@@ -1,3 +1,9 @@
-body {background-color: #6667AB;}
-h1   {color: #BB2649;}
-p    {color: red;}
+body { background-color: #6667AB; }
+p    { color: #FDAC53; }
+
+.maindiv {
+  text-align: center;
+  border: 3px solid #B55A30;
+}
+
+.heading { color: #F5DF4D; }

@@ -11,7 +11,7 @@ const render_checkboxes = (lightbulb_count: number) => {
         toggle_button.setAttribute("type", "checkbox");
         toggle_button.setAttribute("id", `checkbox_${id}`);
 
-        const element: HTMLElement|null = document.getElementById("div");
+        const element: HTMLElement|null = document.getElementById("main");
         if (element === null) { return; }
         element.appendChild(toggle_button);
 
