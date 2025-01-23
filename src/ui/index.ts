@@ -1,7 +1,6 @@
 const ADDRESS = "http://172.31.182.46:8000/lightctl";
 const ws = new WebSocket(ADDRESS);
 
-
 const render_checkboxes = (lightbulb_count: number) => {
 
     for (let id of Array(lightbulb_count).keys()) {
@@ -27,10 +26,6 @@ const render_checkboxes = (lightbulb_count: number) => {
     }
 }
 
-
-
-
-
 ws.onmessage = message => {
     const jason: string = message.data;
     const data = JSON.parse(jason);
@@ -53,6 +48,4 @@ ws.onmessage = message => {
 };
 
 window.onload = () => {
-
-
 }
