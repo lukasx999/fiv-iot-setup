@@ -1,4 +1,4 @@
-const ADDRESS = "http://172.31.180.71:8000/lightctl";
+const ADDRESS = "http://172.31.182.46:8000/lightctl";
 const ws = new WebSocket(ADDRESS);
 
 
