@@ -15,7 +15,7 @@ from paho.mqtt.client import MQTTMessage, Client
 import paho
 
 
-DEVICE_COUNT: int = 4
+DEVICE_COUNT: int = 3
 BROKER: str = "127.0.0.1"
 PORT:   int = 1883
 
