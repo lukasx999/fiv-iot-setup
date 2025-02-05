@@ -77,4 +77,4 @@ async def websocket_endpoint(websocket: WebSocket):
         client.publish(f'/fiv/lb/{id}/action', "on" if state else "off", 0)
 
 
-app.mount("/", StaticFiles(directory="ui/dist", html=True), name="ui")
+# app.mount("/", StaticFiles(directory="ui/dist", html=True), name="ui")
