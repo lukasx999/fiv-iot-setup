@@ -10,3 +10,6 @@
 - Update IP in index.ts (`hostname -I`)
 - Start webserver
   - `fastapi run webserver.py`
+
+## Notes
+- When connecting from GitHub Pages over HTTPS, you may need to allow connecting to insecure WebSockets in Chromium
