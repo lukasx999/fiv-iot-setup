@@ -1,4 +1,4 @@
-const ADDRESS = "http://172.31.177.108:8000/lightctl";
+const ADDRESS = "wss://172.31.177.108:8000/lightctl";
 const ws = new WebSocket(ADDRESS);
 
 const render_checkboxes = (lightbulb_count: number) => {
