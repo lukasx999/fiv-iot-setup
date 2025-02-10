@@ -64,9 +64,9 @@ class Line {
         this.position = new Vector(width/2, height);
     }
     update() {
-        this.position.x++;
-        if (this.position.x >= this.width)
-            this.position.x = this.width/2;
+        //this.position.x++;
+        //if (this.position.x >= this.width)
+        //    this.position.x = this.width/2;
     }
     draw(ctx) {
         this.update();
