@@ -44,10 +44,11 @@ class Ball {
 
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-        //ctx.fillStyle = "lightblue";
+
         ctx.fillStyle = this.colors[this.colors_index++];
         if (this.colors_index == this.colors.length)
             this.colors_index = 0;
+
         ctx.fill();
         ctx.stroke();
 
