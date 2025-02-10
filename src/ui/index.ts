@@ -86,7 +86,7 @@ const do_the_ball = () => {
     const ball = new Ball(50, width, height);
 
     setInterval(() => {
-        ctx.clearRect(0, 0, this.width, this.height);
+        ctx.clearRect(0, 0, width, height);
         line.draw(ctx);
         ball.draw(ctx);
     }, 1);
