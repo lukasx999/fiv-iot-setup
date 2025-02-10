@@ -61,7 +61,7 @@ class Line {
     constructor(width, height) {
         this.width    = width;
         this.height   = height;
-        this.position = new Vector(width/2, height);
+        this.position = new Vector(width, height);
     }
     update() {
         //this.position.x++;
