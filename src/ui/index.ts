@@ -64,7 +64,7 @@ class Line {
     update() {
         this.position.x++;
         if (this.position.x >= this.width)
-            this.position.x = this.width/2;
+            this.position.x = 0;
     }
     draw(ctx) {
         this.update();
