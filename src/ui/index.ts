@@ -55,6 +55,18 @@ class Ball {
 }
 
 
+
+class Line {
+    constructor() {
+    }
+    draw(ctx) {
+        ctx.moveTo(0, 0);
+        ctx.lineTo(200, 100);
+        ctx.stroke();
+    }
+}
+
+
 const do_the_ball = () => {
 
     const canvas = document.getElementById("canvas");
@@ -62,17 +74,12 @@ const do_the_ball = () => {
     const width  = canvas.width;
     const height = canvas.height;
 
-    ctx.moveTo(0, 0);
-    ctx.lineTo(200, 100);
-    ctx.stroke();
-
-
-
+    const line = new Line();
     const ball = new Ball(50, width, height);
 
     setInterval(() => {
         ball.draw(ctx);
-        console.log("render!");
+        line.draw(ctx);
     }, 1);
 }
 
