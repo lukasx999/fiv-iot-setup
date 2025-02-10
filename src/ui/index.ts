@@ -58,10 +58,13 @@ class Ball {
 
 class Line {
     constructor() {
+        this.width    = width;
+        this.height   = height;
+        this.position = new Vector(width, height);
     }
     draw(ctx) {
         ctx.moveTo(0, 0);
-        ctx.lineTo(200, 100);
+        ctx.lineTo(this.position.x, this.position.y);
         ctx.stroke();
     }
 }
@@ -79,7 +82,7 @@ const do_the_ball = () => {
 
     setInterval(() => {
         ball.draw(ctx);
-        line.draw(ctx);
+        //line.draw(ctx);
     }, 1);
 }
 
