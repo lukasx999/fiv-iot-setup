@@ -57,7 +57,7 @@ class Ball {
 
 
 class Line {
-    constructor() {
+    constructor(width, height) {
         this.width    = width;
         this.height   = height;
         this.position = new Vector(width, height);
@@ -77,12 +77,12 @@ const do_the_ball = () => {
     const width  = canvas.width;
     const height = canvas.height;
 
-    const line = new Line();
+    const line = new Line(width, height);
     const ball = new Ball(50, width, height);
 
     setInterval(() => {
         ball.draw(ctx);
-        //line.draw(ctx);
+        line.draw(ctx);
     }, 1);
 }
 
