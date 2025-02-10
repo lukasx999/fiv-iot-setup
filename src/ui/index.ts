@@ -18,7 +18,7 @@ class Ball {
         this.width        = width;
         this.height       = height;
         this.position     = new Vector(width / 2, height / 2);
-        this.colors       = ["red", "blue", "green"];
+        this.colors       = ["red", "blue", "green", "black", "lightblue", "white", "orange"];
         this.colors_index = 0;
     }
     update() {
