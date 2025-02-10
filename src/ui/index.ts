@@ -59,16 +59,16 @@ class Line {
     constructor(width, height) {
         this.width    = width;
         this.height   = height;
-        this.position = new Vector(width, height);
+        this.position = new Vector(0, height);
     }
     update() {
-        //this.position.x++;
-        //if (this.position.x >= this.width)
-        //    this.position.x = this.width/2;
+        this.position.x++;
+        if (this.position.x >= this.width)
+            this.position.x = this.width/2;
     }
     draw(ctx) {
         this.update();
-        ctx.moveTo(0, 0);
+        ctx.moveTo(this.width/2, 0);
         ctx.lineTo(this.position.x, this.position.y);
         ctx.stroke();
     }
