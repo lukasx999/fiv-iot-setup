@@ -75,7 +75,7 @@ class Line {
 }
 
 
-const do_the_ball = () => {
+const do_the_thing = () => {
 
     const canvas = document.getElementById("canvas");
     const ctx    = canvas.getContext("2d");
@@ -83,7 +83,7 @@ const do_the_ball = () => {
     const height = canvas.height;
 
     const line = new Line(width, height);
-    const ball = new Ball(50, width, height);
+    const ball = new Ball(100, width, height);
 
     setInterval(() => {
         ctx.clearRect(0, 0, width, height);
@@ -145,5 +145,5 @@ ws.onmessage = message => {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-    do_the_ball();
+    do_the_thing();
 }, false);
