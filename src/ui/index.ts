@@ -50,8 +50,7 @@ class Ball {
 }
 
 
-
-window.addEventListener("DOMContentLoaded", () => {
+const do_the_ball = () => {
 
     const canvas = document.getElementById("canvas");
     const ctx    = canvas.getContext("2d");
@@ -64,8 +63,9 @@ window.addEventListener("DOMContentLoaded", () => {
         ball.draw(ctx);
         console.log("render!");
     }, 10);
+}
 
-}, false);
+
 
 
 
@@ -117,5 +117,6 @@ ws.onmessage = message => {
 
 };
 
-//window.onload = () => {
-//}
+window.addEventListener("DOMContentLoaded", () => {
+    do_the_ball();
+}, false);
