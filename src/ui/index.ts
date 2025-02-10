@@ -61,12 +61,12 @@ class Line {
     constructor(width, height) {
         this.width    = width;
         this.height   = height;
-        this.position = new Vector(0, height);
+        this.position = new Vector(width/2, height);
     }
     update() {
         this.position.x++;
         if (this.position.x >= this.width)
-            this.position.x = 0;
+            this.position.x = this.width/2;
     }
     draw(ctx) {
         this.update();
