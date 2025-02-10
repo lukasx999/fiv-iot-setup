@@ -18,7 +18,7 @@ class Ball {
         this.width        = width;
         this.height       = height;
         this.position     = new Vector(width / 2, height / 2);
-        this.colors       = ["red", "blue", "green", "black", "lightblue", "white", "orange"];
+        this.colors       = ["blue", "black", "lightblue", "white"];
         this.colors_index = 0;
     }
     update() {
@@ -39,8 +39,6 @@ class Ball {
     }
     draw(ctx) {
         this.update();
-
-        ctx.clearRect(0, 0, this.width, this.height);
 
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
@@ -88,6 +86,7 @@ const do_the_ball = () => {
     const ball = new Ball(50, width, height);
 
     setInterval(() => {
+        ctx.clearRect(0, 0, this.width, this.height);
         line.draw(ctx);
         ball.draw(ctx);
     }, 1);
