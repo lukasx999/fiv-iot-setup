@@ -56,18 +56,18 @@ class Ball {
 
 
 
-class Line {
-    constructor(width, height) {
-        this.width    = width;
-        this.height   = height;
-        this.position = new Vector(width, height);
-    }
-    draw(ctx) {
-        ctx.moveTo(0, 0);
-        ctx.lineTo(this.position.x, this.position.y);
-        ctx.stroke();
-    }
-}
+//class Line {
+//    constructor(width, height) {
+//        this.width    = width;
+//        this.height   = height;
+//        this.position = new Vector(width, height);
+//    }
+//    draw(ctx) {
+//        ctx.moveTo(0, 0);
+//        ctx.lineTo(this.position.x, this.position.y);
+//        ctx.stroke();
+//    }
+//}
 
 
 const do_the_ball = () => {
@@ -77,12 +77,12 @@ const do_the_ball = () => {
     const width  = canvas.width;
     const height = canvas.height;
 
-    const line = new Line(width, height);
+    //const line = new Line(width, height);
     const ball = new Ball(50, width, height);
 
     setInterval(() => {
         ball.draw(ctx);
-        line.draw(ctx);
+        //line.draw(ctx);
     }, 1);
 }
 
