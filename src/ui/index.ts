@@ -1,6 +1,78 @@
 const ADDRESS = "ws://172.31.177.108:8000/lightctl";
 const ws = new WebSocket(ADDRESS);
 
+
+
+
+class Vector {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Ball {
+    constructor(size, width, height) {
+        this.radius   = size;
+        this.velocity = new Vector(5, 3);
+        this.width    = width;
+        this.height   = height;
+        this.position = new Vector(width / 2, height / 2);
+    }
+    update() {
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+
+        if (this.position.x-this.radius <= 0)
+            this.velocity.x *= -1;
+
+        if (this.position.y-this.radius <= 0)
+            this.velocity.y *= -1;
+
+        if (this.position.x+this.radius >= this.width)
+            this.velocity.x *= -1;
+
+        if (this.position.y+this.radius >= this.height)
+            this.velocity.y *= -1;
+    }
+    draw(ctx) {
+        this.update();
+
+        ctx.clearRect(0, 0, this.width, this.height);
+
+        ctx.beginPath();
+        ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = "lightblue";
+        ctx.fill();
+        ctx.stroke();
+
+    }
+}
+
+
+const ball = () => {
+    const canvas = document.getElementById("canvas");
+    const ctx    = canvas.getContext("2d");
+    const width  = canvas.width;
+    const height = canvas.height;
+
+    const ball = new Ball(50, width, height);
+
+    setInterval(() => {
+        ball.draw(ctx);
+        console.log("render!");
+    }, 10);
+
+}
+
+
+//window.addEventListener("DOMContentLoaded", () => {
+//}, false);
+
+
+
+
+
 const render_checkboxes = (lightbulb_count: number) => {
 
     for (let id of Array(lightbulb_count).keys()) {
@@ -48,4 +120,5 @@ ws.onmessage = message => {
 };
 
 window.onload = () => {
+    ball();
 }
