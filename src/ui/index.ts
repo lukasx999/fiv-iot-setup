@@ -67,7 +67,7 @@ const do_the_ball = () => {
     setInterval(() => {
         ball.draw(ctx);
         console.log("render!");
-    }, 10);
+    }, 1);
 }
 
 
