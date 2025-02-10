@@ -14,7 +14,7 @@ class Vector {
 class Ball {
     constructor(size, width, height) {
         this.radius       = size;
-        this.velocity     = new Vector(1, 0.3);
+        this.velocity     = new Vector(3, 1);
         this.width        = width;
         this.height       = height;
         this.position     = new Vector(width / 2, height / 2);
