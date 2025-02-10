@@ -13,11 +13,13 @@ class Vector {
 
 class Ball {
     constructor(size, width, height) {
-        this.radius   = size;
-        this.velocity = new Vector(5, 3);
-        this.width    = width;
-        this.height   = height;
-        this.position = new Vector(width / 2, height / 2);
+        this.radius       = size;
+        this.velocity     = new Vector(5, 3);
+        this.width        = width;
+        this.height       = height;
+        this.position     = new Vector(width / 2, height / 2);
+        this.colors       = ["red", "blue", "green"];
+        this.colors_index = 0;
     }
     update() {
         this.position.x += this.velocity.x;
@@ -42,7 +44,10 @@ class Ball {
 
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = "lightblue";
+        //ctx.fillStyle = "lightblue";
+        ctx.fillStyle = this.colors[this.colors_index++];
+        if (this.colors_index == this.colors.length)
+            this.colors_index = 0;
         ctx.fill();
         ctx.stroke();
 
